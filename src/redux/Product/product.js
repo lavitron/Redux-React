@@ -1,37 +1,28 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 import { getProductList } from "../../services/ProductService"
 
-
-export const getProducts = createAsyncThunk('', async () => {
-    console.log("AsyncThunk")
-    return getProductList().then((res) => res.data);
-})
-
+//reducers
 const productSlice = createSlice({
     name: 'product',
     initialState: {
-        productList: []
+        products: []
     },
-    extraReducers: {
-        [getProducts.fulfilled]: (state, action) => {
-            state.productList = action.payload.paginationList
+    reducers: {
+        getProducts: (state, action) => {
+            state.products = action.payload.paginationList
         }
     }
-}
-)
-
-
+})
 
 export default productSlice.reducer
+//actions
+const { getProducts } = productSlice.actions
 
-// //actions
-// const { getProducts } = productSlice.actions
-
-// export const products = () => async dispatch => {
-//     try {
-//         await getProductList().then((response) => { console.log("Products", response); dispatch(getProducts(response.data)) })
-//     }
-//     catch (e) {
-//         return console.log(e.message)
-//     }
-// }
+export const productList = () => async dispatch => {
+    try {
+        await getProductList().then((response) => { dispatch(getProducts(response.data)) })
+    }
+    catch (e) {
+        return console.log(e.message)
+    }
+}
