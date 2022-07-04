@@ -14,7 +14,7 @@ function Home() {
     <div>
       {
         products?.map((item, key) => (
-          <h2 key={key}>{item.name.substring(0,10)}</h2>
+          <h2 key={key}>{item.name} {key}</h2>
         ))
       }
     </div>

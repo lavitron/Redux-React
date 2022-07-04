@@ -9,7 +9,7 @@ const productSlice = createSlice({
     },
     reducers: {
         getProducts: (state, action) => {
-            state.products = action.payload.paginationList
+            state.products = action.payload
         }
     }
 })
@@ -20,7 +20,7 @@ const { getProducts } = productSlice.actions
 
 export const productList = () => async dispatch => {
     try {
-        await getProductList().then((response) => { dispatch(getProducts(response.data)) })
+        await getProductList().then((response) => { dispatch(getProducts(response.data.products)) })
     }
     catch (e) {
         return console.log(e.message)
